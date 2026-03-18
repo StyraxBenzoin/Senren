@@ -1091,12 +1091,17 @@ img {
   user-select: none;
 }
 
-.lightbox img {
+.lightbox :is(img, video) {
   position: relative;
   max-width: 80%;
   max-height: 80%;
   box-shadow: var(--lightbox-shadow);
   transition: transform var(--base-transition);
+}
+
+.lightbox video {
+  width: auto;
+  height: auto;
 }
 
 .lightbox {
@@ -1257,7 +1262,7 @@ img {
   overflow: hidden;
 }
 
-.lightbox-grid img {
+.lightbox-grid :is(img, video) {
   max-width: 100%;
   max-height: 150px;
   width: auto;
@@ -1267,7 +1272,7 @@ img {
   transition: transform var(--fast-transition);
 }
 
-.lightbox-grid img:hover {
+.lightbox-grid :is(img, video):hover {
   transform: scale(1.05);
 }
 
