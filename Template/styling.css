@@ -1048,7 +1048,7 @@ a {
   grid-template-columns: minmax(var(--grid-column-min-width), 1fr) auto;
 }
 
-.grid-container:not(:has(> .picture-container > img)) {
+.grid-container:not(:has(> .picture-container > :is(img, video))) {
   grid-template-columns: repeat(1, 1fr);
   gap: unset;
 }
@@ -1140,7 +1140,7 @@ img {
   background: var(--picture-bg);
 }
 
-.picture-container img {
+.picture-container > :is(img, video) {
   display: none;
   max-width: 100%;
   max-height: var(--picture-height);
@@ -1150,7 +1150,11 @@ img {
   user-select: none;
 }
 
-.picture-container img:first-of-type {
+.picture-container > video {
+  width: 100%;
+}
+
+.picture-container > :is(img, video):first-child {
   display: block;
 }
 
@@ -1274,12 +1278,12 @@ img {
     border-radius: var(--border-radius-md); 
   }
 
-  [class*=" nsfw" i] img {
+  [class*=" nsfw" i] :is(img, video) {
     filter: blur(20px);
     transition: filter var(--base-transition);
   }
 
-  [class*=" nsfw" i] img.clicked {
+  [class*=" nsfw" i] :is(img, video).clicked {
     filter: blur(0);
   }
 }
@@ -1574,7 +1578,7 @@ img {
 }
 
 /* POS header */
-.pos-info-header  {
+.pos-info-header {
   position: absolute;
   top: 10px;
   left: 0;
@@ -1582,18 +1586,14 @@ img {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 5px !important;
+  gap: 5px;
   pointer-events: none;
-}
-
-#selectionText .pos-info-header [data-sc-class="tag"] {
-  margin-right: 0 !important;
 }
 
 .pos-info-header [data-sc-content="part-of-speech-info"] {
   display: inline-block;
-  font-size: 0.5rem !important;
-  padding: 2px 4px !important;;
+  font-size: 0.5rem;
+  padding: 2px 4px;
   border-radius: 4px;
   background: rgba(0, 0, 0, 0.6);
   color: white;
@@ -1604,8 +1604,8 @@ img {
   background: rgba(255, 255, 255, 0.15);
 }
 
-.glossary-box:has([data-dictionary*="Jitendex"][style*="display: block"]) .pos-info-header,
-.definition-box:has([data-dictionary*="Jitendex"]) .pos-info-header {
+.definition-box:has([data-dictionary*="Jitendex"][style*="display: block"]) .pos-info-header,
+.glossary-box:has([data-dictionary*="Jitendex"][style*="display: block"]) .pos-info-header {
   display: none !important;
 }
 
@@ -2695,15 +2695,6 @@ span[data-sc-content="example-keyword"], span[style*="color-mix(in srgb, lime"] 
 }
 [data-dictionary^="素材辞典"] .dictionary-title::after {
   content: "素材辞典";
-  font-size: var(--dict-size);
-}
-
-/* 絵でわかる慣用句 */
-[data-dictionary^="絵でわかる慣用句"] .dictionary-title {
-  font-size: 0;
-}
-[data-dictionary^="絵でわかる慣用句"] .dictionary-title::after {
-  content: "絵でわかる慣用句";
   font-size: var(--dict-size);
 }
 
@@ -4422,8 +4413,6 @@ li.is-new-card:not(:hover) .related-word {
   --shingo-jiji-yougo-color-rgb: var(--shingo-jiji-yougo-color-rgb-light);
   --donna-toki-dou-tsukau-color: var(--donna-toki-dou-tsukau-color-light);
   --donna-toki-dou-tsukau-color-rgb: var(--donna-toki-dou-tsukau-color-rgb-light);
-  --e-de-wakaru-kanyouku-color: var(--e-de-wakaru-kanyouku-color-light);
-  --e-de-wakaru-kanyouku-color-rgb: var(--e-de-wakaru-kanyouku-color-rgb-light);
   --e-de-wakaru-nihongo-color: var(--e-de-wakaru-nihongo-color-light);
   --e-de-wakaru-nihongo-color-rgb: var(--e-de-wakaru-nihongo-color-rgb-light);
   --jlpt-bunpou-kaisetsu-color: var(--jlpt-bunpou-kaisetsu-color-light);
@@ -4511,8 +4500,6 @@ li.is-new-card:not(:hover) .related-word {
   --shingo-jiji-yougo-color-rgb: var(--shingo-jiji-yougo-color-dark-rgb);
   --donna-toki-dou-tsukau-color: var(--donna-toki-dou-tsukau-color-dark);
   --donna-toki-dou-tsukau-color-rgb: var(--donna-toki-dou-tsukau-color-dark-rgb);
-  --e-de-wakaru-kanyouku-color: var(--e-de-wakaru-kanyouku-color-dark);
-  --e-de-wakaru-kanyouku-color-rgb: var(--e-de-wakaru-kanyouku-color-dark-rgb);
   --e-de-wakaru-nihongo-color: var(--e-de-wakaru-nihongo-color-dark);
   --e-de-wakaru-nihongo-color-rgb: var(--e-de-wakaru-nihongo-color-dark-rgb);
   --jlpt-bunpou-kaisetsu-color: var(--jlpt-bunpou-kaisetsu-color-dark);
@@ -4674,11 +4661,6 @@ li.is-new-card:not(:hover) .related-word {
 :is(.definition-box, .glossary-box) li[data-dictionary^="日本語文法辞典"] {
   --dict-color: var(--nihongo-bunpou-jiten-color);
   --dict-color-rgb: var(--nihongo-bunpou-jiten-color-rgb);
-}
-
-:is(.definition-box, .glossary-box) li[data-dictionary^="絵でわかる慣用句"] {
-  --dict-color: var(--e-de-wakaru-kanyouku-color);
-  --dict-color-rgb: var(--e-de-wakaru-kanyouku-color-rgb);
 }
 
 :is(.definition-box, .glossary-box) li[data-dictionary="絵でわかる日本語"] {
@@ -5915,10 +5897,6 @@ li.is-new-card:not(:hover) .related-word {
   --donna-toki-dou-tsukau-color-rgb-light:  92, 132, 192;
   --donna-toki-dou-tsukau-color-dark:       #7EA8E8;
   --donna-toki-dou-tsukau-color-dark-rgb:   126, 168, 232;
-  --e-de-wakaru-kanyouku-color-light:        #3DA98E;
-  --e-de-wakaru-kanyouku-color-rgb-light:    61, 169, 142;
-  --e-de-wakaru-kanyouku-color-dark:         #4CCFAD;
-  --e-de-wakaru-kanyouku-color-dark-rgb:     76, 207, 173;
   --e-de-wakaru-nihongo-color-light:        #A93D58;
   --e-de-wakaru-nihongo-color-rgb-light:    169, 61, 88;
   --e-de-wakaru-nihongo-color-dark:         #CF4C6E;
