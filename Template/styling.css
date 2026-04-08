@@ -72,10 +72,11 @@
   /* Global Settings */
   --base-size:                        clamp(19px, 3vw, 24px);
   --base-line-height:                 1.5;
-  --bold-highlight:                   0;       /* "1" to bold highlights */
-  --bold-misc-info:                   0;       /* "1" to bold misc info text */
+  --bold-highlight:                   0; /* "1" to bold highlights */
+  --bold-misc-info:                   0; /* "1" to bold misc info text */
   
   /* Font Families */
+  --custom-font:                      ;  /* Type your custom font name here */
   --serif:                            "Klee One", klee, "Hiragino Mincho ProN", "Noto Serif CJK JP", notoserifjp, "Yu Mincho", serif;
   --sans:                             "Hiragino Kaku Gothic ProN", "Noto Sans CJK JP", notosansjp, "Segoe UI", sans-serif;
 
@@ -136,6 +137,7 @@
 
   /* Jitendex Settings */
   --pos-header:                       0;       /* "1" to extract Jitendex POS tags into a centered sticky header. */
+  --jitendex-hide-numbers:            1;       /* Hide Numbered Definitions */
   --jitendex-hide-examples:           0;       /* Hide Example Sentences */
   --jitendex-hide-info-gloss:         0;       /* Hide Explanations */
   --jitendex-hide-xref:               0;       /* Hide Cross References */
@@ -699,24 +701,6 @@ a {
   }
 }
 
-/* List Style */
-.yomitan-glossary ul, 
-.yomitan-glossary ol,
-[data-dictionary] ul, 
-[data-dictionary] ol,
-[data-sc-content="glossary"],
-.background-box ol {
-  list-style: none;
-  padding-left: 0;
-  display: inline;
-}
-
-.yomitan-glossary li,
-[data-dictionary] li,
-[data-sc-content="glossary"] li {
-  list-style: none !important;
-}
-
 /* Custom Dark Mode */
 .custom-dark-mode body {
   background: black !important;
@@ -984,6 +968,10 @@ a {
   align-items: center;
   white-space: nowrap;
   min-width: min-content;
+}
+
+.background-box ol {
+  padding-left: 0;
 }
 
 .background-box {
@@ -1403,10 +1391,6 @@ img {
 }
 
 /* Sentence */
-#formattedSentence {
-  user-select: none;
-}
-
 .sentence-container {
   margin: 0.85rem 0;
   margin-left: 5px;
@@ -1447,7 +1431,7 @@ img {
 }
 
 #sentence rb {
-  display: inline-block;
+  display: inline;
   white-space: nowrap;
   line-height: 1;
 }
@@ -2372,13 +2356,6 @@ span[style*="display:inline"]:has(+ span[style*="border:1.5px dotted #c83c28"]) 
   }
 }
 
-li > span > div > span[data-sc-code] + ol > li,
-ol > li:has(> span[data-sc-code] + ol) > ol > li,
-ul > li:has(> span[data-sc-code] + ol) > ol > li {
-  display: inline;
-  padding-left: 0 !important;
-}
-
 [data-sc-content="example-sentence-a"],
 [data-sc-content="xref"],
 [data-sc-content="antonym"],
@@ -2642,6 +2619,48 @@ span[data-sc-content="example-keyword"], span[style*="color-mix(in srgb, lime"] 
   [data-sc-content="sense"]:last-child 
   [data-sc-content="glossary"]:last-of-type {
     margin-bottom: -0.13rem !important; 
+  }
+}
+
+/* Numbered Definitions */
+@container style(--jitendex-hide-numbers: 0) {
+  .yomitan-glossary ol,
+  [data-dictionary] ol {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    padding-inline-start: 0;
+  }
+
+  .yomitan-glossary ul, 
+  [data-dictionary] ul {
+    padding-inline-start: var(--spacing-lg);
+  }
+}
+
+@container style(--jitendex-hide-numbers: 1) {
+  .yomitan-glossary ul, 
+  .yomitan-glossary ol,
+  [data-dictionary] ul, 
+  [data-dictionary] ol,
+  [data-sc-content="glossary"] {
+    list-style: none;
+    padding-left: 0;
+    display: inline;
+  }
+
+  .yomitan-glossary li,
+  [data-dictionary] li,
+  [data-sc-content="glossary"] li {
+    list-style: none !important;
+  }
+
+  li > span > div > span[data-sc-code] + ol > li,
+  ol > li:has(> span[data-sc-code] + ol) > ol > li,
+  ul > li:has(> span[data-sc-code] + ol) > ol > li {
+    display: inline;
+    padding-left: 0 !important;
   }
 }
 
